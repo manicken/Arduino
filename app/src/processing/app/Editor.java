@@ -238,6 +238,7 @@ public class Editor extends JFrame implements RunnerListener {
   private Runnable timeoutUploadHandler;
 
   private Map<String, Tool> internalToolCache = new HashMap<String, Tool>();
+  public List<Tool> tools;
 
   public Editor(Base ibase, File file, int[] storedLocation, int[] defaultLocation, Platform platform) throws Exception {
     super("Arduino");
@@ -882,6 +883,9 @@ public class Editor extends JFrame implements RunnerListener {
         Class<?> toolClass = Class.forName(className, true, loader);
         final Tool tool = (Tool) toolClass.newInstance();
 
+        if (tools == null) tools = new ArrayList<Tool>();
+        tools.add(tool);
+        
         tool.init(Editor.this);
 
         String title = tool.getMenuTitle();
